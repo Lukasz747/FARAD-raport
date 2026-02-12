@@ -19,48 +19,40 @@ PRIMARY_COLOR = "#003366"
 # CSS - Wąski sidebar i style
 st.markdown(f"""
     <style>
-    /* TŁO APLIKACJI */
+    /* TŁO APLIKACJI - WYMUSZONE JASNE */
     .stApp {{ background-color: #f9f9f9; }}
     
-    /* NAGŁÓWKI OGÓLNE (Dla głównej części) */
+    /* NAGŁÓWKI */
     h1, h2, h3 {{ color: {PRIMARY_COLOR} !important; }}
     
-    /* --- WYMUSZENIE KOLORU ETYKIET (GŁÓWNA CZĘŚĆ) --- */
-    /* Używamy koloru #262730 dla tekstu etykiet w głównej części */
+    /* --- 1. CZĘŚĆ GŁÓWNA (ZAWSZE CIEMNE NAPISY) --- */
+    /* Ponieważ tło główne jest wymuszone na jasne (#f9f9f9), tekst tutaj musi być zawsze ciemny */
     div[data-testid="stWidgetLabel"] *,
     label,
-    label *,
     div[data-testid="stMarkdownContainer"] p {{
         color: #262730 !important;
     }}
-    /* -------------------------------- */
 
-    /* --- POPRAWKA KOLORÓW W SIDEBARZE --- */
-    /* Wymuszenie białego koloru dla wszystkich tekstów i nagłówków TYLKO wewnątrz sidebara */
-    /* Nadpisuje to poprzednie reguły, dzięki czemu tekst jest widoczny na ciemnym tle */
+    /* --- 2. SIDEBAR (ZMIENNY KOLOR) --- */
+    
+    /* A) Domyślnie (TRYB JASNY) -> Tekst Ciemny (#262730) */
+    /* To naprawia Twój obecny problem w trybie jasnym */
     section[data-testid="stSidebar"] *,
     section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] p {{
-        color: #FFFFFF !important;
+        color: #262730 !important;
     }}
-    /* ------------------------------------ */
 
-    /* ZWĘŻENIE SIDEBARA */
-    section[data-testid="stSidebar"] {{
-        width: 200px !important;
-        min-width: 200px !important;
-        max-width: 200px !important;
+    /* B) W Trybie Ciemnym (Dark Mode) -> Tekst Biały */
+    /* Nadpisuje powyższe ustawienie tylko gdy system jest w trybie ciemnym */
+    @media (prefers-color-scheme: dark) {{
+        section[data-testid="stSidebar"] *,
+        section[data-testid="stSidebar"] label,
+        section[data-testid="stSidebar"] p {{
+            color: #FFFFFF !important;
+        }}
     }}
-    </style>
-    """, unsafe_allow_html=True)
 
-# CSS - Wąski sidebar i style
-st.markdown(f"""
-    <style>
-    .stApp {{ background-color: #f9f9f9; }}
-    h1, h2, h3 {{ color: {PRIMARY_COLOR}; }}
-    
     /* ZWĘŻENIE SIDEBARA */
     section[data-testid="stSidebar"] {{
         width: 200px !important;
